@@ -51,7 +51,7 @@ function _add_thumbnail_field_to_edit($tag){
  * @param args オプションの連想配列。
  *   size: thumbnail, medium(default),large
  *   alt: cateogryの名前(default)
- *//
+ */
 function the_category_thumbnail($id, $args = array()){
 
     $img_id = get_option("_category_thumbnail_" . $id);
