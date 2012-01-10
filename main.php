@@ -44,11 +44,24 @@ function _add_thumbnail_field_to_edit($tag){
     echo $html;
 }
 
-function the_category_thumbnail($id, $size = "medium", $args = array()){
+/**
+ * 指定されたカテゴリのサムネイルのimgタグを生成する。
+ * 
+ * @param id 表示対象のカテゴリのID
+ * @param args オプションの連想配列。
+ *   size: thumbnail, medium(default),large
+ *   alt: cateogryの名前(default)
+ *//
+function the_category_thumbnail($id, $args = array()){
 
     $img_id = get_option("_category_thumbnail_" . $id);
     if(!is_numeric($img_id)){
         return;
+    }
+    $size = "medium";
+    if(isset($args["size"])){
+        $size = $args["size"];
+        unset($args["size"]);
     }
     $category = get_category($id, ARRAY_A);
     $default_alt = $category["name"];
@@ -59,12 +72,13 @@ function the_category_thumbnail($id, $size = "medium", $args = array()){
                       "height" => "",
                       "alt" => $default_alt
                       );
+    
     $attributes = wp_parse_args($args, $defaults);
 
     list($img_src, $w, $h) = image_downsize($img_id, $size);
     $html = '<img src="' . esc_attr($img_src) . '" ';
     foreach($attributes as $attr => $val){
-        $html .= esc_attr($attr) . '="' . $val . '" ';
+        $html .= esc_attr($attr) . '="' . esc_attr($val) . '" ';
     }
     $html .= " />";
     return $html;
