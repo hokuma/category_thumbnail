@@ -34,7 +34,7 @@ function _delete_thumbnail($category_id){
 function _add_thumbnail_field_to_edit($tag){
     $html  = "<tr class='form-field'>";
     $html .= "<th scope='row' valign='top'><label for='tag-thumbnail'>カテゴリ画像</label></th>";
-    $html .= "<td>" . the_category_thumbnail($tag->term_id) . "<input type='file' name='tag-thumbnail' id='tag-thumbnail' /></td>";
+    $html .= "<td>" . the_category_thumbnail($tag->term_id, array(), false) . "<input type='file' name='tag-thumbnail' id='tag-thumbnail' /></td>";
     $html .= "</tr>";
     $html .= wp_nonce_field("update_category_thumbnail", "_update_category_thumbnail", true, false);
     $html .= "<script type='text/javascript'>";
@@ -52,7 +52,7 @@ function _add_thumbnail_field_to_edit($tag){
  *   size: thumbnail, medium(default),large
  *   alt: cateogryの名前(default)
  */
-function the_category_thumbnail($id, $args = array()){
+function the_category_thumbnail($id, $args = array(), $echo = true){
 
     $img_id = get_option("_category_thumbnail_" . $id);
     if(!is_numeric($img_id)){
@@ -81,7 +81,12 @@ function the_category_thumbnail($id, $args = array()){
         $html .= esc_attr($attr) . '="' . esc_attr($val) . '" ';
     }
     $html .= " />";
-    return $html;
+    if($echo){
+        echo $html;
+    }else{
+        return $html;
+    }
+        
 }
 
 
