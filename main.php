@@ -68,8 +68,6 @@ function the_category_thumbnail($id, $args = array(), $echo = true){
 
     $defaults = array(
                       "class" => "",
-                      "width" => "",
-                      "height" => "",
                       "alt" => $default_alt
                       );
     
